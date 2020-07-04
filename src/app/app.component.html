@@ -1,17 +1,17 @@
 <!-- This snippet uses Font Awesome 5 Free as a dependency. You can download it at fontawesome.io! -->
-
+<!--
 <section class="pricing py-5">
   <div class="container">
     <div class="row">
-      <!-- Free Tier -->
+      
       <div class="col-lg-4">
         <app-pricing title="free" price="50" value="0"></app-pricing>
        </div> 
-      <!-- Plus Tier -->
+      
       <div class="col-lg-4">
       <app-pricing title="plus" price="150" value="1"></app-pricing>
       </div>
-      <!-- Pro Tier -->
+      
       <div class="col-lg-4">
       <app-pricing title="pro" price="200" value="2"></app-pricing>
       </div>
@@ -19,3 +19,101 @@
     </div>
   </div>
 </section>
+-->
+
+<header>
+  <h1>Application form</h1>
+</header>
+<hr>
+<hr>
+<div class="row">
+<div class="col-lg-6">
+  <form [formGroup]="myForm" (submit)="adddata()">
+    <label for="Name">User Name:</label>
+    <input type="text" Name="Name" formControlName="Name" />
+    <span *ngIf="!myForm.get('Name').valid && myForm.get('Name').dirty">invalid name</span>
+  <span *ngIf="myForm.get('Name').touched && !myForm.get('Name').valid">This field is required</span>
+    <br />
+    <label for="Email">Email:</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="email" name="Emali" formControlName="Email" />
+    <span *ngIf= "myForm.get('Email').invalid">Please check your mail id</span>
+    <br />
+    <label for ="dob">DOB:</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="date" name="dob" formControlName="DOB">
+    <br/>
+    <label for="country">Country:</label>
+    &nbsp;&nbsp;&nbsp;
+    <select name="country" id="" formControlName="Country">
+      <option value="IN">India</option>
+      <option value="US">America</option>
+      <option value="UK">United kindom</option>
+    </select>
+    <br />
+    <h5><label for="Gender">Gender:</label><br></h5>
+    <input type="radio" id="male" name="Gender" value="male" formControlName="Gender">
+    <label for="male">Male</label><br>
+    <input type="radio" id="female" name="Gender" value="female" formControlName="Gender">
+    <label for="female">Female</label><br>
+    <input type="radio" id="other" name="Gender" value="other" formControlName="Gender">
+    <label for="other">Other</label>
+    <br />
+    <h5><label for="ms">Marital status:</label><br></h5>
+    <input type="radio" name="Maritalstatus" value="Married" formControlName="Maritalstatus">
+    <label for="married">Married</label><br>
+    <input type="radio" name="Maritalstatus" value="Unmarried" formControlName="Maritalstatus">
+    <label for="unmarried">Unmarried</label><br>
+    <br/>
+    <h5><label for="favfood">Fav foods:</label><br></h5>
+    <input type="checkbox"  name="Favfood" value="pasta" formControlName="Favfood">
+    <label for="food1"> pasta</label><br>
+    <input type="checkbox"  name="Favfood" value="Meals" formControlName="Favfood">
+    <label for="food1"> Meals</label><br>
+    <br/>
+    <h5>Address:</h5>
+    <div formArrayName="Address" *ngFor="let address of myForm.get('Address')['controls'];let i = index">
+      <div [formGroupName]="i">
+        <label for="">Street</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" formControlName="street">
+  
+        <br>
+        <label for="">Zip Code</label>
+        <input type="text" formControlName="zipcode">
+      </div>
+      <hr>
+    </div>
+    <br>
+    <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit"  value="Submit" />
+  </form>
+  
+</div>
+
+<div class="col-lg-6">
+  <table class="table table-striped" >
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Country</th>
+        <th scope="col">Gender</th>
+        <th scope="col">Permenent_address</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let det of Details;let i = index">
+        <th scope="row">{{i+1}}</th>
+        <td>{{det.Name}}</td>
+        <td>{{det.Country}}</td>
+        <td>{{det.Gender}}</td>
+        <td>{{det.Address[0].street}}</td>
+        <td>
+          <input type="button" (click)="remove(i)" value="Delete " >
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
